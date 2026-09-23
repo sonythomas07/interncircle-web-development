@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sony Thomas — Full-Stack Developer Portfolio. Building responsive web experiences and practical software solutions.">
+  <title>Sony Thomas | Full-Stack Developer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="#home" class="nav-brand" aria-label="Sony Thomas Portfolio Home">
+        Sony Thomas
+      </a>
+      <nav class="site-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link">HOME</a></li>
+          <li><a href="#about" class="nav-link">ABOUT</a></li>
+          <li><a href="#skills" class="nav-link">SKILLS</a></li>
+          <li><a href="#projects" class="nav-link">PROJECTS</a></li>
+          <li><a href="#contact" class="nav-link">CONTACT</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="eyebrow">FULL-STACK DEVELOPER</span>
+          <h1 id="hero-title" class="hero-title">Sony Thomas</h1>
+          <p class="hero-description">
+            Building thoughtful, responsive web experiences and practical software solutions with a focus on full-stack development, UI/UX, and emerging technologies.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">LET'S BUILD</a>
+            <a href="#contact" class="btn btn-secondary">CONTACT ME</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="image-frame">
+            <img 
+              src="assets/profile1.png" 
+              alt="Portrait photograph of Sony Thomas" 
+              class="profile-img"
+              width="260"
+              height="260"
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">ABOUT</span>
+          <h2 id="about-heading" class="section-title">Building with purpose and technical discipline.</h2>
+        </div>
+        <div class="about-content">
+          <p>
+            I am a Computer Science student with a dedicated interest in full-stack web development, user interface design, and artificial intelligence. My approach emphasizes writing clean, maintainable code, developing responsive user interfaces, and architecting reliable software solutions for real-world use cases.
+          </p>
+          <p>
+            Whether implementing interactive frontend architectures or crafting robust backend endpoints and database schemas, I focus on performance, clarity, and thoughtful user experiences.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section" aria-labelledby="skills-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">TECHNICAL EXPERTISE</span>
+          <h2 id="skills-heading" class="section-title">Skills & Technologies</h2>
+          <p class="section-subtitle">Core technical stack and tools applied across modern web and software engineering.</p>
+        </div>
+        <div class="skills-list-container">
+          <div class="skills-row">
+            <h3 class="skills-group-title">Frontend Development</h3>
+            <div class="skills-tags-wrap">
+              <span class="skill-badge">HTML5</span>
+              <span class="skill-badge">CSS3</span>
+              <span class="skill-badge">JavaScript</span>
+              <span class="skill-badge">React</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <h3 class="skills-group-title">Backend & Database</h3>
+            <div class="skills-tags-wrap">
+              <span class="skill-badge">Python</span>
+              <span class="skill-badge">FastAPI</span>
+              <span class="skill-badge">MySQL</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <h3 class="skills-group-title">Tools & Workflows</h3>
+            <div class="skills-tags-wrap">
+              <span class="skill-badge">Git</span>
+              <span class="skill-badge">GitHub</span>
+              <span class="skill-badge">Responsive Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section" aria-labelledby="projects-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">PORTFOLIO</span>
+          <h2 id="projects-heading" class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Real-world applications built with modern web technologies and architectures.</p>
+        </div>
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-category">AI & Computer Vision</span>
+              <h3 class="project-title">HITS Proctoring</h3>
+            </div>
+            <p class="project-description">
+              AI-powered online proctoring platform designed for monitoring candidate interviews using computer vision and AI-based detection.
+            </p>
+            <div class="project-stack" aria-label="Technologies used">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">YOLOv8</span>
+              <span class="tech-tag">MediaPipe</span>
+              <span class="tech-tag">OpenCV</span>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-category">Machine Learning & Web</span>
+              <h3 class="project-title">Food Recommendation System</h3>
+            </div>
+            <p class="project-description">
+              A web-based food recommendation application that recommends food based on user preferences and available data.
+            </p>
+            <div class="project-stack" aria-label="Technologies used">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Machine Learning</span>
+              <span class="tech-tag">Web Development</span>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-category">Productivity Application</span>
+              <h3 class="project-title">Do It Later</h3>
+            </div>
+            <p class="project-description">
+              A task and productivity web application for organizing and managing tasks efficiently.
+            </p>
+            <div class="project-stack" aria-label="Technologies used">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">CSS</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">CONNECT</span>
+          <h2 id="contact-heading" class="section-title">Get In Touch</h2>
+          <p class="section-subtitle">Direct channels for professional inquiries, software collaboration, and networking.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <span class="contact-channel">EMAIL</span>
+            <a href="mailto:sonythomas703@gmail.com" class="contact-link">sonythomas703@gmail.com</a>
+            <span class="contact-note">Primary channel for inquiries</span>
+          </div>
+          <div class="contact-card">
+            <span class="contact-channel">GITHUB</span>
+            <a href="https://github.com/sonythomas07" target="_blank" rel="noopener noreferrer" class="contact-link">View GitHub Profile</a>
+            <span class="contact-note">Source code & repositories</span>
+          </div>
+          <div class="contact-card">
+            <span class="contact-channel">LINKEDIN</span>
+            <a href="https://www.linkedin.com/in/sony-thomas-dev/" target="_blank" rel="noopener noreferrer" class="contact-link">View LinkedIn Profile</a>
+            <span class="contact-note">Professional profile</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-info">
+        <p class="footer-brand">Sony Thomas</p>
+        <p class="footer-role">Full-Stack Developer</p>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2026 Sony Thomas. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
