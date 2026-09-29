@@ -1,4 +1,4 @@
-name: Deploy Task 2 Portfolio
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -26,10 +26,17 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Task 2
+      - name: Build site directory
+        run: |
+          mkdir -p _site
+          cp -r Task-02/. _site/
+          mkdir -p _site/Task-03
+          cp -r Task-03/. _site/Task-03/
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './Task-02'
+          path: './_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
