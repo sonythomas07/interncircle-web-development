@@ -29,9 +29,11 @@ jobs:
       - name: Build site directory
         run: |
           mkdir -p _site
-          cp -r Task-02/. _site/
+          cp -R Task-02/. _site/
           mkdir -p _site/Task-03
-          cp -r Task-03/. _site/Task-03/
+          cp -R Task-03/. _site/Task-03/
+          mkdir -p _site/Task-04
+          cp -R Task-04/. _site/Task-04/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
