@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Weather Dashboard — Open-Meteo API</title>
+  <meta name="description" content="Real-time live weather conditions, meteorological metrics, and 5-day daily forecast powered by Open-Meteo APIs.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-badge">Live Weather Dashboard</div>
+      <h1 class="app-title">WeatherSphere</h1>
+      <p class="app-subtitle">Real-time atmospheric conditions and 5-day forecast powered by Open-Meteo.</p>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-section" aria-label="City search">
+      <form id="search-form" class="search-form" role="search" novalidate>
+        <div class="search-input-wrapper">
+          <label for="city-input" class="visually-hidden">Enter city name</label>
+          <svg class="search-input-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          <input
+            type="text"
+            id="city-input"
+            class="search-input"
+            placeholder="Search city (e.g. Tokyo, London, New York)..."
+            autocomplete="off"
+            aria-describedby="search-validation"
+          >
+          <button type="submit" id="search-btn" class="btn btn-primary">
+            <span class="btn-text">Search</span>
+          </button>
+        </div>
+        <div id="search-validation" class="search-validation" role="alert" aria-live="polite" hidden></div>
+      </form>
+
+      <!-- Quick City Suggestions -->
+      <div class="quick-cities" role="group" aria-label="Quick city suggestions">
+        <span class="quick-label">Popular:</span>
+        <button type="button" class="chip-btn" data-city="London">London</button>
+        <button type="button" class="chip-btn" data-city="Tokyo">Tokyo</button>
+        <button type="button" class="chip-btn" data-city="New York">New York</button>
+        <button type="button" class="chip-btn" data-city="Sydney">Sydney</button>
+        <button type="button" class="chip-btn" data-city="Paris">Paris</button>
+      </div>
+    </section>
+
+    <!-- Status Banner (Default City Notice) -->
+    <div id="status-banner" class="status-banner" role="status" aria-live="polite">
+      <span class="banner-icon" aria-hidden="true">&#9432;</span>
+      <span id="status-banner-text">Showing default city: London. Search any city above for live conditions.</span>
+    </div>
+
+    <!-- Main Content State Displays -->
+    <main class="dashboard-main" id="dashboard-main">
+
+      <!-- Loading State Indicator -->
+      <section id="loading-state" class="state-card loading-card" role="status" aria-live="polite" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="state-title">Fetching weather data...</p>
+        <p class="state-desc">Connecting to Open-Meteo geocoding and forecast services.</p>
+      </section>
+
+      <!-- Error State Card -->
+      <section id="error-state" class="state-card error-card" role="alert" aria-live="assertive" hidden>
+        <div class="error-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h2 id="error-title" class="state-title">Unable to load weather</h2>
+        <p id="error-message" class="state-desc">City not found. Please verify the spelling and try again.</p>
+        <button type="button" id="retry-btn" class="btn btn-secondary">
+          Try Again
+        </button>
+      </section>
+
+      <!-- Weather Data Display -->
+      <div id="weather-content" class="weather-content">
+        <!-- Current Weather Overview Card -->
+        <article class="card current-weather-card" aria-label="Current Weather Conditions">
+          <div class="current-header">
+            <div>
+              <h2 id="current-location" class="location-name">--</h2>
+              <p id="current-coordinates" class="location-coords">--</p>
+            </div>
+            <span id="current-date" class="current-timestamp">--</span>
+          </div>
+
+          <div class="current-hero">
+            <div class="current-temp-group">
+              <span id="current-temp" class="hero-temp">--°</span>
+              <div class="current-condition-wrap">
+                <p id="current-condition" class="hero-condition">--</p>
+                <p id="current-apparent" class="hero-apparent">Feels like --°C</p>
+              </div>
+            </div>
+            <div id="current-weather-icon" class="hero-weather-icon" aria-hidden="true">
+              <!-- SVG icon populated by JS -->
+            </div>
+          </div>
+
+          <!-- Meteorological Metrics Grid -->
+          <div class="metrics-grid" aria-label="Detailed weather metrics">
+            <div class="metric-card">
+              <div class="metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Apparent Temp</span>
+                <span id="metric-apparent" class="metric-value">--°C</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Humidity</span>
+                <span id="metric-humidity" class="metric-value">--%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" />
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Wind Speed</span>
+                <span id="metric-wind" class="metric-value">-- km/h</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+                  <path d="M8 19v2m4-2v2m4-2v2" />
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Precipitation</span>
+                <span id="metric-precip" class="metric-value">-- mm</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5-Day Daily Forecast Section -->
+        <section class="forecast-section" aria-label="5-Day Forecast">
+          <div class="section-header">
+            <h3 class="section-title">5-Day Daily Forecast</h3>
+            <span class="section-subtitle">Local daytime projections</span>
+          </div>
+          <div id="forecast-grid" class="forecast-grid">
+            <!-- 5 forecast cards rendered dynamically by JavaScript -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p class="footer-note">InternCircle Task 5 &bull; Real-time data from <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
