@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopSphere — Interactive Mini E-Commerce Store</title>
+  <meta name="description" content="ShopSphere is a modern, responsive mini e-commerce web application featuring a dynamic product catalog, interactive cart management, localStorage persistence, and checkout preview.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Toast Notification Container for Feedback -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <span class="brand-badge">InternCircle Task 6</span>
+        <a href="#store-top" class="brand-logo" aria-label="ShopSphere Home">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="brand-name">ShopSphere</span>
+        </a>
+      </div>
+
+      <!-- Header Cart Toggle Button -->
+      <button type="button" id="cart-toggle-btn" class="cart-trigger-btn" aria-label="Open shopping cart" aria-haspopup="dialog" aria-expanded="false">
+        <svg class="cart-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-btn-text">Cart</span>
+        <span id="header-cart-badge" class="header-cart-badge" aria-label="0 items in cart">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Storefront Container -->
+  <div id="store-top" class="store-container">
+    <!-- Store Introduction -->
+    <section class="store-hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <span class="hero-tag">Curated Collection</span>
+        <h1 id="hero-title" class="hero-title">Modern Essentials for Smart Living</h1>
+        <p class="hero-subtitle">
+          Explore our handcrafted selection of top-tier electronics, everyday lifestyle goods, and premium accessories with instant cart syncing and seamless checkout preview.
+        </p>
+      </div>
+    </section>
+
+    <!-- Controls: Search & Category Filters -->
+    <section class="controls-section" aria-label="Catalog search and category filters">
+      <!-- Search Input -->
+      <div class="search-box">
+        <label for="product-search" class="visually-hidden">Search products by title or description</label>
+        <div class="search-input-wrap">
+          <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          <input
+            type="search"
+            id="product-search"
+            class="search-input"
+            placeholder="Search products by name or category..."
+            autocomplete="off"
+          >
+          <button type="button" id="clear-search-btn" class="clear-search-btn" aria-label="Clear search input" hidden>
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <nav class="category-filters" aria-label="Filter products by category">
+        <button type="button" class="filter-pill active" data-category="all" aria-pressed="true">
+          All Products
+        </button>
+        <button type="button" class="filter-pill" data-category="Electronics" aria-pressed="false">
+          Electronics
+        </button>
+        <button type="button" class="filter-pill" data-category="Accessories" aria-pressed="false">
+          Accessories
+        </button>
+        <button type="button" class="filter-pill" data-category="Lifestyle" aria-pressed="false">
+          Lifestyle
+        </button>
+      </nav>
+    </section>
+
+    <!-- Catalog Status Summary -->
+    <div class="catalog-status-bar">
+      <span id="catalog-count-text" class="catalog-count-text" aria-live="polite">Showing all products</span>
+    </div>
+
+    <!-- Product Grid & Empty State -->
+    <main class="catalog-main">
+      <div id="product-grid" class="product-grid" aria-label="Product Catalog">
+        <!-- Products dynamically injected via script.js -->
+      </div>
+
+      <!-- No Products Found Empty State -->
+      <div id="catalog-empty-state" class="empty-state catalog-empty-state" hidden>
+        <div class="empty-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h2 class="empty-title">No products match your criteria</h2>
+        <p class="empty-desc">Try clearing your search query or selecting a different category filter.</p>
+        <button type="button" id="reset-filters-btn" class="btn btn-secondary">Reset Filters</button>
+      </div>
+    </main>
+
+    <!-- Store Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p class="footer-meta">
+          <strong>ShopSphere</strong> &bull; InternCircle Web Development Internship Task 6
+        </p>
+        <p class="footer-disclaimer">
+          Demonstration project only. Prices are shown in INR (₹) for illustrative purposes. No real monetary transactions or deliveries are processed.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Cart Drawer Overlay -->
+  <div id="cart-overlay" class="drawer-overlay" aria-hidden="true"></div>
+
+  <!-- Cart Drawer Panel -->
+  <aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title-group">
+        <h2 id="cart-title" class="drawer-title">Shopping Cart</h2>
+        <span id="drawer-item-count" class="drawer-item-count">(0 items)</span>
+      </div>
+      <button type="button" id="cart-close-btn" class="drawer-close-btn" aria-label="Close shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div class="drawer-body">
+      <div id="cart-items-list" class="cart-items-list" aria-label="Items in shopping cart">
+        <!-- Cart item elements injected via script.js -->
+      </div>
+
+      <!-- Empty Cart State -->
+      <div id="cart-empty-state" class="empty-state cart-empty-state" hidden>
+        <div class="empty-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+        <h3 class="empty-title">Your cart is empty</h3>
+        <p class="empty-desc">Looks like you haven't added any products yet. Browse our catalog and find something you love!</p>
+        <button type="button" id="start-shopping-btn" class="btn btn-primary">Start Shopping</button>
+      </div>
+    </div>
+
+    <!-- Drawer Footer: Summary & Actions -->
+    <div id="cart-footer" class="drawer-footer">
+      <div class="summary-breakdown">
+        <div class="summary-row">
+          <span class="summary-label">Subtotal</span>
+          <span id="cart-subtotal-val" class="summary-val">₹0</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Shipping</span>
+          <span class="summary-val text-success">Free Delivery</span>
+        </div>
+        <div class="summary-row total-row">
+          <span class="summary-label">Estimated Total</span>
+          <span id="cart-total-val" class="summary-val total-val">₹0</span>
+        </div>
+      </div>
+
+      <div class="drawer-actions">
+        <button type="button" id="checkout-trigger-btn" class="btn btn-primary btn-block">
+          Proceed to Checkout
+        </button>
+        <button type="button" id="clear-cart-btn" class="btn btn-outline btn-block" aria-label="Clear all items from shopping cart">
+          Clear Entire Cart
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Checkout Preview Modal Overlay & Dialog -->
+  <div id="checkout-modal-overlay" class="modal-overlay" aria-hidden="true" hidden>
+    <div id="checkout-modal" class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div>
+          <h2 id="modal-title" class="modal-title">Order Preview</h2>
+          <p id="modal-description" class="modal-subtitle">Review your items before placing a demo order.</p>
+        </div>
+        <button type="button" id="modal-close-btn" class="drawer-close-btn" aria-label="Close order preview modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Content: Order Items Table & Calculations -->
+      <div class="modal-body">
+        <!-- Order Items List -->
+        <div class="checkout-items-wrap">
+          <table class="checkout-table" aria-label="Ordered items summary">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col" class="text-center">Qty</th>
+                <th scope="col" class="text-right">Price</th>
+                <th scope="col" class="text-right">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="checkout-items-tbody">
+              <!-- Dynamically populated via script.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Checkout Summary Calculations -->
+        <div class="checkout-totals">
+          <div class="summary-row">
+            <span class="summary-label">Items Subtotal</span>
+            <span id="checkout-subtotal-val" class="summary-val">₹0</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Estimated Delivery</span>
+            <span class="summary-val text-success">Complimentary</span>
+          </div>
+          <div class="summary-row total-row">
+            <span class="summary-label">Final Order Total</span>
+            <span id="checkout-total-val" class="summary-val total-val">₹0</span>
+          </div>
+        </div>
+
+        <!-- Demonstration Notice Banner -->
+        <div class="demo-notice-box" role="note">
+          <svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div class="notice-text">
+            <strong>Demonstration Only:</strong> This is an educational mini e-commerce project. No financial transaction or payment processing will occur.
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-footer">
+        <button type="button" id="modal-cancel-btn" class="btn btn-secondary">
+          Back to Cart
+        </button>
+        <button type="button" id="place-order-btn" class="btn btn-primary">
+          Place Demo Order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Success Dialog -->
+  <div id="order-success-overlay" class="modal-overlay" aria-hidden="true" hidden>
+    <div id="order-success-modal" class="modal-dialog modal-success-dialog" role="dialog" aria-modal="true" aria-labelledby="success-title">
+      <div class="success-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h2 id="success-title" class="success-title">Demo Order Placed!</h2>
+      <p class="success-desc">
+        Thank you for testing ShopSphere. Your simulated order <strong id="success-order-id">#SPH-0000</strong> has been processed successfully.
+      </p>
+      <div class="success-details">
+        <div class="summary-row">
+          <span class="summary-label">Order Total:</span>
+          <span id="success-order-total" class="summary-val text-brand">₹0</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Status:</span>
+          <span class="summary-val text-success">Confirmed (Demo Mode)</span>
+        </div>
+      </div>
+      <button type="button" id="success-done-btn" class="btn btn-primary btn-block">
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+
+  <!-- Core JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
+
